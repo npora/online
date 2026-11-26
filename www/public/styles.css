@@ -72,43 +72,95 @@ h1 { font-size: clamp(2.5rem, 5.5vw, 5.25rem); letter-spacing: -.055em; }
 .card-links { display: flex; align-items: center; flex-wrap: wrap; }
 
 .projects { border-block: 1px solid var(--line); background: #eeefe7; padding-block: clamp(3rem, 6vw, 6rem); }
-.cards, .commands, .feature-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
-.cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cards, .feature-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .card { display: grid; align-content: start; gap: .9rem; padding: clamp(1rem, 3vw, 1.7rem); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .card { grid-template-rows: auto auto 1fr auto; }
 .card p, .start p, .error p { color: var(--muted); }
 .card-links { gap: .6rem 1rem; }
-.card-links, .commands a { color: var(--green); font-weight: 650; }
+.card-links, .generator-layout a { color: var(--green); font-weight: 650; }
 .card-logo { display: grid; width: 2.6rem; aspect-ratio: 1; place-items: center; border-radius: .7rem; font: 700 1.4rem ui-monospace, monospace; }
 .vue { background: #dceee3; color: #155d42; }
 .react { background: #e4eaf8; color: #294b83; }
 .request { background: #ede9db; color: #654625; }
 .features, .start, .error { padding-block: clamp(3rem, 7vw, 7rem); }
 .start p, .error p { margin-top: .75rem; }
-.commands, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.feature-grid .card, .commands .card { min-width: 0; }
+.feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.feature-grid .card { min-width: 0; }
 .feature-grid .card { grid-template-rows: auto 1fr auto; }
-.commands .card { grid-template-rows: auto auto 1fr auto; }
-.commands pre { align-self: start; }
-.request-setup { grid-template-rows: auto; margin-top: 1rem; }
 .feature-grid ul { margin: 0; padding-inline-start: 1.2rem; color: var(--muted); }
 .feature-grid li + li { margin-top: .65rem; }
 .feature-grid strong { color: var(--ink); }
-.feature-grid a, .request-setup a { color: var(--green); font-weight: 650; }
+.feature-grid a { color: var(--green); font-weight: 650; }
 .start { background: #eeefe7; border-top: 1px solid var(--line); }
 pre { max-width: 100%; overflow: auto; margin: 0; padding: .75rem; border-radius: .55rem; background: #e8eee6; font-size: .85rem; }
 .error .button { margin-top: 1.5rem; }
 
-@media (max-width: 51rem) {
-  .cards { grid-template-columns: 1fr; }
-}
 @media (max-width: 35rem) {
   .wrap { width: calc(100% - 2rem); }
   .nav { min-height: 4rem; }
   .nav-links { gap: .5rem; font-size: .75rem; }
-  .commands, .feature-grid, .preview-grid { grid-template-columns: 1fr; }
+  .feature-grid, .preview-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hide-previews, .hide-previews + label { display: none; }
+}
+
+/* Navigation and product entry points */
+.header { position: relative; z-index: 2; }
+.nav-links { flex-wrap: wrap; justify-content: flex-end; gap: .45rem clamp(.55rem, 2vw, 1.5rem); }
+.demo-menu { position: relative; }
+.demo-menu summary {
+  display: flex; align-items: center; gap: .5rem; cursor: pointer;
+  list-style: none; padding: .45rem .7rem; border: 1px solid var(--line);
+  border-radius: .65rem; background: var(--surface);
+}
+.demo-menu summary::-webkit-details-marker { display: none; }
+.demo-menu summary::after {
+  content: ""; width: .4rem; height: .4rem; border: solid currentColor;
+  border-width: 0 1px 1px 0; transform: translateY(-2px) rotate(45deg);
+}
+.demo-menu[open] summary::after { transform: translateY(2px) rotate(225deg); }
+.demo-links {
+  position: absolute; z-index: 3; top: calc(100% + .55rem); right: 0;
+  width: min(19rem, calc(100vw - 2rem)); padding: .4rem; display: grid;
+  border: 1px solid var(--line); border-radius: .9rem;
+  background: var(--surface); box-shadow: 0 1rem 2rem #17392a24;
+}
+.demo-links a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .65rem; padding: .65rem; border-radius: .55rem; }
+.nav .demo-links a:hover, .nav .demo-links a:focus-visible { background: #e7efe8; text-decoration: none; }
+.demo-links small { display: block; color: var(--muted); }
+.nav-badge { display: grid; place-items: center; width: 2rem; aspect-ratio: 1; border-radius: .55rem; font-weight: 750; }
+
+.request-section { color: #edf7f1; background: #112c25; padding-block: clamp(2.75rem, 7vw, 6rem); }
+.request-layout, .generator-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.25rem, 5vw, 4rem); align-items: center; }
+.request-section h2 { margin-block: .65rem; overflow-wrap: anywhere; }
+.request-section p { color: #c9ded3; max-width: 34rem; }
+.request-section .card-links, .generator-layout .card-links { margin-top: 1.2rem; }
+.request-section .primary { background: #b6f0cc; color: #102a22; }
+.request-section .secondary { color: #edf7f1; background: transparent; border-color: #729487; }
+.request-console { min-width: 0; border: 1px solid #416257; border-radius: 1rem; background: #10201c; padding: 1rem; }
+.console-header { display: flex; align-items: center; gap: .6rem; font-weight: 650; margin-bottom: .8rem; }
+.console-header span { width: .6rem; height: .6rem; border-radius: 50%; background: #9cdeb5; }
+.request-console pre { background: #1c352d; color: #def4e7; }
+.request-console pre + pre { margin-top: .65rem; }
+.generator-card { min-width: 0; }
+.generator-card p { margin: 0; }
+@media (max-width: 720px) {
+  .request-layout, .generator-layout, .cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 430px) {
+  .nav { align-items: flex-start; padding-block: .65rem; }
+  .nav-links { gap: .4rem .65rem; }
+  .demo-links { position: fixed; top: auto; right: 1rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy, .preview { animation: arrive .42s ease-out both; }
+  .react-preview { animation-delay: .09s; }
+  .demo-links { animation: arrive .16s ease-out both; }
+  .preview, .request-console, .button { transition: transform .2s ease, box-shadow .2s ease; }
+  .preview:hover, .request-console:hover { transform: translateY(-3px); box-shadow: 0 1rem 2rem #17392a22; }
+  .button:hover { transform: translateY(-2px); }
+  @keyframes arrive { from { opacity: 0; transform: translateY(.65rem); } to { opacity: 1; transform: translateY(0); } }
 }

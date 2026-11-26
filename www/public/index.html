@@ -9,6 +9,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script src="/playground-link.js" defer></script>
+  <script src="/site.js" defer></script>
   <title>Npora | 后台模板和请求工具</title>
 </head>
 <body>
@@ -18,8 +19,16 @@
       <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">N</span>Npora</a>
       <div class="nav-links">
         <a href="#projects">项目</a>
-        <a href="#features">功能</a>
-        <a href="#start">快速开始</a>
+        <a href="#request">请求库</a>
+        <a href="#start">生成后台</a>
+        <details class="demo-menu">
+          <summary>演示</summary>
+          <div class="demo-links">
+            <a href="https://admin.npora.live/"><span class="nav-badge vue">V</span><span><strong>Vue 后台</strong><small>Vue 3 · Element Plus</small></span><span aria-hidden="true">↗</span></a>
+            <a href="https://react.npora.live/"><span class="nav-badge react">R</span><span><strong>React 后台</strong><small>React · Ant Design</small></span><span aria-hidden="true">↗</span></a>
+            <a href="https://request.npora.live/#playground"><span class="nav-badge request">/</span><span><strong>请求库控制台</strong><small>@npora/request</small></span><span aria-hidden="true">↗</span></a>
+          </div>
+        </details>
         <a href="https://github.com/npora">GitHub <span aria-hidden="true">↗</span></a>
       </div>
     </nav>
@@ -94,15 +103,6 @@
               <a href="https://github.com/npora/admin-template-react">源码 <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-          <article class="card">
-            <span class="card-logo request" aria-hidden="true">/</span>
-            <h3>@npora/request</h3>
-            <p>支持重试、超时、请求取消和流式响应的 HTTP 请求库。控制台可实际运行请求场景。</p>
-            <div class="card-links">
-              <a href="https://request.npora.live/#playground">打开控制台 <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/npora/request">源码 <span aria-hidden="true">↗</span></a>
-            </div>
-          </article>
         </div>
       </div>
     </section>
@@ -131,39 +131,42 @@
         </article>
       </div>
     </section>
-    <section class="start" id="start" aria-labelledby="start-title">
-      <div class="wrap">
-        <h2 id="start-title">快速开始</h2>
-        <p>Vue 和 React 脚手架都提供纯净版，适合接入自己的后端。线上站点提供独立的演示环境。</p>
-        <div class="commands">
-          <article class="card">
-            <h3>生成 Vue 项目</h3>
-            <p>使用已发布的 <code>@npora/create-admin</code> 创建纯净版并安装依赖。</p>
-            <pre><code>npx @npora/create-admin@latest my-admin --yes --install npm
-cd my-admin
-npm run dev</code></pre>
-            <div class="card-links">
-              <a href="https://github.com/npora/create-admin">生成器参数 <span aria-hidden="true">↗</span></a>
-              <a href="https://admin.npora.live/database/">Vue SQL 详情与用法 <span aria-hidden="true">↗</span></a>
-            </div>
-          </article>
-          <article class="card">
-            <h3>使用 React 纯净模板</h3>
-            <p>React 的生成器支持待 npm 发布，目前可从源码启动。</p>
-            <pre><code>git clone https://github.com/npora/admin-template-react.git
-cd admin-template-react
-npm ci
-npm run dev</code></pre>
-            <div class="card-links">
-              <a href="https://github.com/npora/admin-template-react">开发与后端配置 <span aria-hidden="true">↗</span></a>
-              <a href="https://react.npora.live/database/">React SQL 详情与用法 <span aria-hidden="true">↗</span></a>
-            </div>
-          </article>
+    <section class="request-section" id="request" aria-labelledby="request-title">
+      <div class="wrap request-layout">
+        <div>
+          <span class="card-logo request" aria-hidden="true">/</span>
+          <h2 id="request-title">@npora/request</h2>
+          <p>为浏览器、Node.js 和 Worker 提供统一的 HTTP 请求接口。用在线控制台体验流式响应、取消请求、失败重试和认证刷新。</p>
+          <div class="card-links">
+            <a class="button primary" href="https://request.npora.live/#playground">打开控制台 <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="https://github.com/npora/request/blob/main/docs/api.md">API 文档 <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
-        <div class="card request-setup">
-          <h3>安装请求库</h3>
+        <div class="request-console">
+          <div class="console-header"><span></span>安装与使用</div>
           <pre><code>npm install @npora/request</code></pre>
-          <a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a>
+          <pre><code>import { createClient } from '@npora/request/core'
+
+const api = createClient({ baseURL: '/api' })
+const user = await api.get('/user')</code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="start" id="start" aria-labelledby="start-title">
+      <div class="wrap generator-layout">
+        <div>
+          <h2 id="start-title">生成后台</h2>
+          <p>运行生成器，选择 Vue 或 React，创建纯净后台模板。随后选择 npm、pnpm、Yarn 或跳过安装。</p>
+          <div class="card-links">
+            <a href="https://github.com/npora/create-admin">生成器参数 <span aria-hidden="true">↗</span></a>
+            <a href="https://admin.npora.live/database/">Vue SQL 指南 <span aria-hidden="true">↗</span></a>
+            <a href="https://react.npora.live/database/">React SQL 指南 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="card generator-card">
+          <h3>在终端创建项目</h3>
+          <pre><code>npx @npora/create-admin@latest my-admin</code></pre>
+          <p>新版生成器提供 Vue / React 选择。npm 当前版本仍支持创建 Vue 项目。<a href="https://github.com/npora/admin-template-react">查看 React 模板</a></p>
         </div>
       </div>
     </section>

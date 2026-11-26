@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Npora 开源开发工具。体验 Vue 后台模板和 @npora/request 的在线控制台，了解 React 后台模板。">
-  <meta name="theme-color" content="#f5f5ef">
+  <meta name="description" content="Npora 开源开发工具。体验 Vue 与 React 后台模板以及 @npora/request 的在线控制台。">
+  <meta name="theme-color" content="#111e26">
   <link rel="canonical" href="https://www.npora.live/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
@@ -18,25 +18,59 @@
       <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">N</span>Npora</a>
       <div class="nav-links">
         <a href="#projects">项目</a>
+        <a href="#features">功能</a>
         <a href="#start">快速开始</a>
         <a href="https://github.com/npora">GitHub <span aria-hidden="true">↗</span></a>
       </div>
     </nav>
   </header>
   <main id="main">
-    <section class="wrap hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <h1 id="hero-title">Npora 开源<br>开发工具</h1>
-        <p>用 Npora Admin 搭建管理后台，用 <code>@npora/request</code> 管理应用的 HTTP 请求。</p>
-        <div class="actions">
-          <a class="button primary" href="#projects">查看项目 <span aria-hidden="true">↓</span></a>
-          <a class="button secondary" href="https://admin.npora.live/">体验 Vue 后台 <span aria-hidden="true">↗</span></a>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <div class="hero-copy">
+          <h1 id="hero-title">Npora 开源开发工具</h1>
+          <p>两套后台模板，同一套接口约定。在线体验 Vue、React 和 <code>@npora/request</code>。</p>
+        </div>
+        <div class="preview-controls">
+          <input type="checkbox" id="hide-previews" class="hide-previews">
+          <label for="hide-previews">隐藏动态预览</label>
+          <div class="preview-grid">
+            <article class="preview vue-preview">
+              <header class="preview-header">
+                <div class="preview-heading">
+                  <span class="card-logo vue" aria-hidden="true">V</span>
+                  <div><h2>Vue 后台</h2><p>Vue 3 · Element Plus</p></div>
+                </div>
+                <a class="button preview-launch" href="https://admin.npora.live/" aria-label="在线体验 Vue 后台">在线体验 <span aria-hidden="true">↗</span></a>
+              </header>
+              <div class="preview-media">
+                <picture class="preview-motion">
+                  <source media="(prefers-reduced-motion: reduce)" srcset="/assets/vue-demo.png">
+                  <img src="/assets/vue-demo.gif" width="960" height="600" alt="Vue 后台演示预览">
+                </picture>
+                <img class="preview-still" src="/assets/vue-demo.png" width="960" height="600" alt="Vue 后台演示截图">
+              </div>
+            </article>
+            <article class="preview react-preview">
+              <header class="preview-header">
+                <div class="preview-heading">
+                  <span class="card-logo react" aria-hidden="true">R</span>
+                  <div><h2>React 后台</h2><p>React · Ant Design</p></div>
+                </div>
+                <a class="button preview-launch" href="https://react.npora.live/" aria-label="在线体验 React 后台">在线体验 <span aria-hidden="true">↗</span></a>
+              </header>
+              <div class="preview-media">
+                <picture class="preview-motion">
+                  <source media="(prefers-reduced-motion: reduce)" srcset="/assets/react-demo.png">
+                  <img src="/assets/react-demo.gif" width="960" height="600" alt="React 后台演示预览">
+                </picture>
+                <img class="preview-still" src="/assets/react-demo.png" width="960" height="600" alt="React 后台演示截图">
+              </div>
+            </article>
+          </div>
+          <p class="preview-note">动图使用隔离的示例数据。React 在线演示使用独立的只读数据。</p>
         </div>
       </div>
-      <figure class="preview">
-        <figcaption><span aria-hidden="true"></span>Npora Admin · Vue 工作台</figcaption>
-        <img src="/assets/admin-dashboard.png" width="1440" height="940" alt="Vue 工作台截图，显示导航、用户与角色统计和近期账户活动">
-      </figure>
     </section>
     <section class="projects" id="projects" aria-labelledby="projects-title">
       <div class="wrap">
@@ -72,12 +106,60 @@
         </div>
       </div>
     </section>
-    <section class="wrap start" id="start" aria-labelledby="start-title">
-      <h2 id="start-title">快速开始</h2>
-      <p>生成 Vue 后台项目，或将请求库安装到已有项目。</p>
-      <div class="commands">
-        <div><h3>创建 Vue 后台</h3><pre><code>npx @npora/create-admin@latest my-admin</code></pre><a href="https://github.com/npora/create-admin">查看生成器参数 <span aria-hidden="true">↗</span></a></div>
-        <div><h3>安装请求库</h3><pre><code>npm install @npora/request</code></pre><a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a></div>
+    <section class="wrap features" id="features" aria-labelledby="features-title">
+      <h2 id="features-title">后台功能</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Vue 后台模板</h3>
+          <ul>
+            <li><strong>工作台与导航</strong><br>动态菜单、菜单搜索和页签，按角色控制页面与按钮权限。</li>
+            <li><strong>系统管理</strong><br>用户、部门、角色、菜单和字典管理，支持权限预览与操作审计。</li>
+            <li><strong>账号安全</strong><br>登录、改密和会话管理，可选 Google Authenticator，支持顶栏锁屏。</li>
+            <li><strong>界面偏好与更新</strong><br>切换主题、布局、中英文与应用时区。生产站点使用 PWA 更新提示，新版由用户确认后刷新。</li>
+          </ul>
+          <a href="https://github.com/npora/admin-template#使用指南">查看 Vue 使用指南 <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="card">
+          <h3>React 后台模板</h3>
+          <ul>
+            <li><strong>工作台与导航</strong><br>工作台统计、动态菜单、菜单搜索和页签，沿用 Vue 模板的组件标识与权限约定。</li>
+            <li><strong>系统管理</strong><br>用户、部门、角色、菜单和字典管理，支持操作审计。公开演示使用只读数据。</li>
+            <li><strong>账号安全</strong><br>登录、会话管理、个人中心与顶栏锁屏，可配置 Google Authenticator。</li>
+            <li><strong>界面偏好与更新</strong><br>切换中英文与应用时区。生产构建生成 PWA 更新服务，新版由用户确认后刷新。</li>
+          </ul>
+          <a href="https://github.com/npora/admin-template-react#开始使用">查看 React 使用指南 <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+    </section>
+    <section class="start" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <h2 id="start-title">快速开始</h2>
+        <p><code>@npora/create-admin</code> 当前可生成 Vue 项目。React 模板可从源码启动。</p>
+        <div class="preset-grid">
+          <article class="card">
+            <h3>纯净版 <code>starter</code></h3>
+            <p>默认预设。包含核心前端和 MySQL 初始化脚本，适合接入自己的后端。</p>
+            <pre><code>npx @npora/create-admin@latest my-admin --preset starter</code></pre>
+          </article>
+          <article class="card">
+            <h3>Worker 版 <code>worker</code></h3>
+            <p>包含核心前端和 Cloudflare Worker 参考后端，按生成项目内的说明初始化。</p>
+            <pre><code>npx @npora/create-admin@latest my-admin --preset worker</code></pre>
+          </article>
+          <article class="card">
+            <h3>展示版 <code>demo</code></h3>
+            <p>包含展示页面与参考后端，生成后用 <code>npm run dev:demo</code> 启动展示前端。</p>
+            <pre><code>npx @npora/create-admin@latest my-admin --preset demo</code></pre>
+          </article>
+        </div>
+        <a class="setup-link" href="https://github.com/npora/create-admin">查看生成器参数 <span aria-hidden="true">↗</span></a>
+        <div class="commands">
+          <div><h3>使用 React 模板</h3><pre><code>git clone https://github.com/npora/admin-template-react.git
+cd admin-template-react
+npm ci
+npm run dev</code></pre><a href="https://github.com/npora/admin-template-react">查看开发与后端配置 <span aria-hidden="true">↗</span></a></div>
+          <div><h3>安装请求库</h3><pre><code>npm install @npora/request</code></pre><a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a></div>
+        </div>
       </div>
     </section>
   </main>

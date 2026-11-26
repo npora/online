@@ -16,4 +16,4 @@ npx --yes wrangler@4.154.0 deploy --dry-run
 
 预览检查首页、手机布局、项目入口、快速开始和 404。正式切换需要部署授权和 Cloudflare 域名配置。
 
-工作台截图来自 Vue 模板公开演示素材 `docs/showcase/dashboard.png`。
+首屏的 `public/assets/vue-demo.gif` 和 `public/assets/react-demo.gif` 展示各自后台。两套预览使用相同尺寸，支持手动隐藏动态内容并尊重系统的减少动态效果偏好。

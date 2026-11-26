@@ -1,6 +1,6 @@
 # 请求库展示站
 
-本站介绍 `@npora/request` 并提供可运行的请求控制台。目标地址为 `request.npora.live`。构建使用 [source.env](source.env) 中指定的请求库提交。展示源码、锁文件、Functions、状态 Worker 和测试由 [website/](website/) 独立维护。请求库发布仍由 [npora/request](https://github.com/npora/request) 管理。
+本站介绍 [`@npora/request`](https://github.com/npora/request) 并提供可运行的请求控制台，线上入口为 [request.npora.live](https://request.npora.live/)，也可从[官网演示导航](https://www.npora.live/)进入。构建使用 [source.env](source.env) 中指定的请求库提交。请求库源码、API 契约和 npm 发布归 [npora/request](https://github.com/npora/request) 管理；本目录负责请求库在线展示源码、锁文件、Functions、状态 Worker、站点验收和 Cloudflare 部署。
 
 ## 构建与预览
 

@@ -1,6 +1,6 @@
 # Vue 后台演示
 
-线上入口为 [admin.npora.live](https://admin.npora.live)。`source.env` 固定演示使用的 [Vue 模板](https://github.com/npora/admin-template) 提交。模板负责后台页面、接口契约和可生成预设。本目录负责引用版本、预览验收和部署接管。
+线上演示入口为 [admin.npora.live](https://admin.npora.live)，也可从[官网演示导航](https://www.npora.live/)进入。`source.env` 固定演示使用的 [Vue 模板源码](https://github.com/npora/admin-template) 提交。模板负责后台页面、接口契约和纯净版生成产物；本目录负责演示版本引用、独立演示配置、预览验收和 Cloudflare 部署接管。
 
 ## 构建和预览
 

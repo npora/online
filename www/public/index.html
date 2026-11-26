@@ -81,6 +81,24 @@
         </div>
       </div>
     </section>
+    <section class="start" id="start" aria-labelledby="start-title">
+      <div class="wrap generator-layout">
+        <div>
+          <h2 id="start-title">生成后台</h2>
+          <p>运行生成器，选择 Vue 或 React，创建对应的纯净版后台模板。随后选择 npm、pnpm、Yarn 或跳过安装。</p>
+          <div class="card-links">
+            <a href="https://github.com/npora/create-admin">生成器参数 <span aria-hidden="true">↗</span></a>
+            <a href="https://admin.npora.live/database/">Vue SQL 指南 <span aria-hidden="true">↗</span></a>
+            <a href="https://react.npora.live/database/">React SQL 指南 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="card generator-card">
+          <h3>在终端创建项目</h3>
+          <pre><code>npx @npora/create-admin@latest my-admin</code></pre>
+          <p>交互式选择 Vue 或 React，即可生成对应的纯净版项目。<a href="https://github.com/npora/create-admin">查看生成器用法</a></p>
+        </div>
+      </div>
+    </section>
     <section class="projects" id="projects" aria-labelledby="projects-title">
       <div class="wrap">
         <h2 id="projects-title">项目与演示</h2>
@@ -108,24 +126,25 @@
     </section>
     <section class="wrap features" id="features" aria-labelledby="features-title">
       <h2 id="features-title">后台功能</h2>
+      <p>Vue 与 React 两套后台提供一致的页面与能力，差异仅在技术栈和对应的界面组件实现。</p>
       <div class="feature-grid">
         <article class="card">
-          <h3>Vue 后台模板</h3>
+          <h3>Vue 后台模板 <small>Vue 3 · Element Plus</small></h3>
           <ul>
-            <li><strong>工作台与导航</strong><br>动态菜单、菜单搜索和页签，按角色控制页面与按钮权限。</li>
+            <li><strong>工作台与导航</strong><br>动态菜单、菜单搜索、页签和快捷入口，按账号权限控制页面与按钮操作。</li>
             <li><strong>系统管理</strong><br>用户、部门、角色、菜单和字典管理，支持权限预览与操作审计。</li>
-            <li><strong>账号安全</strong><br>登录、改密和会话管理，可选 Google Authenticator，支持顶栏锁屏。</li>
-            <li><strong>界面偏好与更新</strong><br>切换主题、布局、中英文与应用时区。生产站点使用 PWA 更新提示，新版由用户确认后刷新。</li>
+            <li><strong>账号与安全</strong><br>登录、修改密码、会话管理、个人中心和锁屏，可选 Google Authenticator。</li>
+            <li><strong>界面偏好与更新</strong><br>主题、布局、组件尺寸、页签风格、中英文和应用时区；支持 PWA 更新提示，确认后刷新。</li>
           </ul>
           <a href="https://github.com/npora/admin-template#使用指南">查看 Vue 使用指南 <span aria-hidden="true">↗</span></a>
         </article>
         <article class="card">
-          <h3>React 后台模板</h3>
+          <h3>React 后台模板 <small>React · Ant Design</small></h3>
           <ul>
-            <li><strong>工作台与导航</strong><br>工作台统计、动态菜单、菜单搜索和页签，沿用 Vue 模板的组件标识与权限约定。</li>
-            <li><strong>系统管理</strong><br>用户、部门、角色、菜单和字典管理，支持操作审计。公开演示使用只读数据。</li>
-            <li><strong>账号安全</strong><br>登录、会话管理、个人中心与顶栏锁屏，可配置 Google Authenticator。</li>
-            <li><strong>界面偏好与更新</strong><br>切换中英文与应用时区。生产构建生成 PWA 更新服务，新版由用户确认后刷新。</li>
+            <li><strong>工作台与导航</strong><br>动态菜单、菜单搜索、页签和快捷入口，按账号权限控制页面与按钮操作。</li>
+            <li><strong>系统管理</strong><br>用户、部门、角色、菜单和字典管理，支持权限预览与操作审计。</li>
+            <li><strong>账号与安全</strong><br>登录、修改密码、会话管理、个人中心和锁屏，可选 Google Authenticator。</li>
+            <li><strong>界面偏好与更新</strong><br>主题、布局、组件尺寸、页签风格、中英文和应用时区；支持 PWA 更新提示，确认后刷新。</li>
           </ul>
           <a href="https://github.com/npora/admin-template-react#开始使用">查看 React 使用指南 <span aria-hidden="true">↗</span></a>
         </article>
@@ -149,24 +168,6 @@
 
 const api = createClient({ baseURL: '/api' })
 const user = await api.get('/user')</code></pre>
-        </div>
-      </div>
-    </section>
-    <section class="start" id="start" aria-labelledby="start-title">
-      <div class="wrap generator-layout">
-        <div>
-          <h2 id="start-title">生成后台</h2>
-          <p>运行生成器，选择 Vue 或 React，创建纯净后台模板。随后选择 npm、pnpm、Yarn 或跳过安装。</p>
-          <div class="card-links">
-            <a href="https://github.com/npora/create-admin">生成器参数 <span aria-hidden="true">↗</span></a>
-            <a href="https://admin.npora.live/database/">Vue SQL 指南 <span aria-hidden="true">↗</span></a>
-            <a href="https://react.npora.live/database/">React SQL 指南 <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-        <div class="card generator-card">
-          <h3>在终端创建项目</h3>
-          <pre><code>npx @npora/create-admin@latest my-admin</code></pre>
-          <p>新版生成器提供 Vue / React 选择。npm 当前版本仍支持创建 Vue 项目。<a href="https://github.com/npora/admin-template-react">查看 React 模板</a></p>
         </div>
       </div>
     </section>

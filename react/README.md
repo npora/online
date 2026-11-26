@@ -1,7 +1,7 @@
 # React 后台演示
 
-计划域名为 `react.npora.live`。`source.env` 固定 React 模板仓库的完整提交。
-应用、业务接口契约和依赖锁由模板仓库维护，演示运行配置由此目录负责。
+React 后台在线演示入口为 [react.npora.live](https://react.npora.live/)，也可从[官网演示导航](https://www.npora.live/)进入。`source.env` 固定演示使用的 [React 模板源码](https://github.com/npora/admin-template-react)完整提交。
+模板仓库维护应用、业务接口契约、MySQL 脚本和依赖锁；本目录维护线上演示版本引用、独立只读演示配置、预览验收和 Cloudflare 部署。
 
 ## 构建和预览
 

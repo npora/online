@@ -1,12 +1,12 @@
 # Npora 总官网
 
-官网使用 Cloudflare Workers Static Assets，发布域名为 `www.npora.live`。页面放在 `public/`，可直接预览。Vue 演示沿用 `admin.npora.live`，React 演示使用独立的只读数据。请求控制台使用 `request.npora.live`。
+官网使用 Cloudflare Workers Static Assets，线上入口为 [www.npora.live](https://www.npora.live/)，页面源码位于本仓库 [`public/`](public/)，部署配置由本目录维护。官网提供 [Vue 后台演示](https://admin.npora.live/)、[React 后台演示](https://react.npora.live/)和[请求库控制台](https://request.npora.live/)入口。对应项目源码分别由 [Vue 模板](https://github.com/npora/admin-template)、[React 模板](https://github.com/npora/admin-template-react)、[请求库](https://github.com/npora/request)和[生成器](https://github.com/npora/create-admin)维护。
 
 `/api` 和 `/api/*` 兼容旧请求库示例，由官网 Worker 透传到固定的请求库域名。历史 `/#playground` 链接会跳到新的控制台。先验收请求站及其状态绑定，再切换官网域名。www 使用 Worker Route 接管流量，保留原 Pages DNS 和绑定作为回滚来源。根域现有 DNS 不由本配置管理。切换后检查旧 API 客户端。
 
 ## 快速开始文案
 
-官网展示 Vue 与 React 的纯净版脚手架。Vue 使用已发布的生成命令，React 通过源码启动，等 npm 上线并验证实际生成结果后再补充命令。线上演示使用独立配置，不作为脚手架生成选项。两张起步卡各自链接对应演示站的 `/database/` SQL 用法。
+生成器支持交互式选择 Vue 或 React，并创建对应的纯净版后台项目。两套后台的页面与功能覆盖一致，技术栈分别为 Vue 3 + Element Plus 和 React + Ant Design。官网展示两套模板的独立演示入口；线上演示使用独立配置，不作为生成器选项。官网的 SQL 指南链接分别指向 Vue 与 React 的 `/database/` 页面。
 
 ## 本地预览与部署预检
 

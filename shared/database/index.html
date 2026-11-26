@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MySQL 数据库指南 · Npora Admin</title>
+  <meta name="description" content="Npora Admin Vue 和 React 模板的 MySQL 初始化、迁移及后端接入指南。">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header><nav aria-label="站点导航"><a href="/">返回在线演示</a><a href="https://www.npora.live/">Npora 官网</a></nav></header>
+  <main>
+    <h1>MySQL 数据库指南</h1>
+    <p class="lead">Vue 和 React 纯净版共用权限模型、MySQL 脚本与 API 契约。运行模板需要自己的后端，后端负责连接数据库、登录鉴权和业务权限。公开演示的账号仅用于线上体验。</p>
+    <section aria-labelledby="initialize">
+      <h2 id="initialize">初始化空库</h2>
+      <p>使用 MySQL 8.0.16 或更新版本，存储引擎为 InnoDB，字符集为 utf8mb4。先创建一个空数据库。</p>
+      <pre><code>CREATE DATABASE npora_admin
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_0900_ai_ci;</code></pre>
+      <p>在模板项目根目录执行初始化脚本。MySQL 客户端会提示输入密码。使用初始化账号连接，后端运行时配置自己的数据库账号。</p>
+      <pre><code>sh database/mysql/init.sh --user root --password npora_admin</code></pre>
+      <p>初始化脚本依次导入 01–04、06、07。用数据库客户端手动导入时也按这个顺序执行。</p>
+    </section>
+    <section aria-labelledby="files">
+      <h2 id="files">SQL 文件及增量迁移</h2>
+      <ul>
+        <li><strong>01–02 基础结构及授权</strong>。创建用户、部门、角色、菜单以及两张授权关联表，导入初始角色与菜单。</li>
+        <li><strong>03–04 字典与查询索引</strong>。创建字典类型和数据表，补齐权限及列表、层级查询索引。</li>
+        <li><strong>05 验证器</strong>。后端启用 TOTP 时按需执行，保存加密密钥和绑定状态。</li>
+        <li><strong>06–07 排序与最近用户索引</strong>。改善管理列表、树排序和最近新增用户查询。</li>
+        <li><strong>08–10 审计与会话管理</strong>。需要审计、会话撤销和权限预览时依次导入。会话存储及审计写入由后端实现。</li>
+      </ul>
+      <p><a href="https://github.com/npora/admin-template/tree/main/database/mysql">查看全部 SQL 文件及数据库说明</a></p>
+    </section>
+    <section aria-labelledby="connect">
+      <h2 id="connect">连接后端并登录</h2>
+      <ol>
+        <li>在后端完成数据库连接配置。通过后端初始化流程创建管理员，保存后端生成的密码哈希和角色关系。SQL 初始化不会创建可登录用户。</li>
+        <li>实现登录、当前会话或用户资料、动态路由及所需管理接口。后端按账号状态、角色与权限执行鉴权。</li>
+        <li>在模板的 <code>.env.development</code> 中填写本机后端地址，运行 <code>npm run dev</code>，再用刚创建的账号登录。</li>
+      </ol>
+      <pre><code>VITE_API_URL=http://localhost:8080</code></pre>
+      <p>生产环境将同域名下的 <code>/api</code> 转发到项目自己的后端。数据库连接参数和密钥放在后端配置中。</p>
+      <p><a href="https://github.com/npora/admin-template/blob/main/docs/api.md">查看 API 契约</a></p>
+    </section>
+    <section aria-labelledby="upgrade">
+      <h2 id="upgrade">升级已有数据库</h2>
+      <p>先暂停写入并备份。按实际版本和已执行记录，只应用缺少的增量 SQL。已有 DATETIME 数据库使用独立的毫秒时间戳升级脚本，记录历史时区并按照文件说明执行。新库直接使用毫秒结构。</p>
+      <p><a href="https://github.com/npora/admin-template/blob/main/database/mysql/upgrades/01-millisecond-timestamps.sql">查看旧库时间戳升级脚本</a></p>
+    </section>
+  </main>
+</body>
+</html>

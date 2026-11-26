@@ -134,31 +134,36 @@
     <section class="start" id="start" aria-labelledby="start-title">
       <div class="wrap">
         <h2 id="start-title">快速开始</h2>
-        <p><code>@npora/create-admin</code> 当前可生成 Vue 项目。React 模板可从源码启动。</p>
-        <div class="preset-grid">
-          <article class="card">
-            <h3>纯净版 <code>starter</code></h3>
-            <p>默认预设。包含核心前端和 MySQL 初始化脚本，适合接入自己的后端。</p>
-            <pre><code>npx @npora/create-admin@latest my-admin --preset starter</code></pre>
-          </article>
-          <article class="card">
-            <h3>Worker 版 <code>worker</code></h3>
-            <p>包含核心前端和 Cloudflare Worker 参考后端，按生成项目内的说明初始化。</p>
-            <pre><code>npx @npora/create-admin@latest my-admin --preset worker</code></pre>
-          </article>
-          <article class="card">
-            <h3>展示版 <code>demo</code></h3>
-            <p>包含展示页面与参考后端，生成后用 <code>npm run dev:demo</code> 启动展示前端。</p>
-            <pre><code>npx @npora/create-admin@latest my-admin --preset demo</code></pre>
-          </article>
-        </div>
-        <a class="setup-link" href="https://github.com/npora/create-admin">查看生成器参数 <span aria-hidden="true">↗</span></a>
+        <p>Vue 和 React 脚手架都提供纯净版，适合接入自己的后端。线上站点提供独立的演示环境。</p>
         <div class="commands">
-          <div><h3>使用 React 模板</h3><pre><code>git clone https://github.com/npora/admin-template-react.git
+          <article class="card">
+            <h3>生成 Vue 项目</h3>
+            <p>使用已发布的 <code>@npora/create-admin</code> 创建纯净版并安装依赖。</p>
+            <pre><code>npx @npora/create-admin@latest my-admin --yes --install npm
+cd my-admin
+npm run dev</code></pre>
+            <div class="card-links">
+              <a href="https://github.com/npora/create-admin">生成器参数 <span aria-hidden="true">↗</span></a>
+              <a href="https://admin.npora.live/database/">Vue SQL 详情与用法 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="card">
+            <h3>使用 React 纯净模板</h3>
+            <p>React 的生成器支持待 npm 发布，目前可从源码启动。</p>
+            <pre><code>git clone https://github.com/npora/admin-template-react.git
 cd admin-template-react
 npm ci
-npm run dev</code></pre><a href="https://github.com/npora/admin-template-react">查看开发与后端配置 <span aria-hidden="true">↗</span></a></div>
-          <div><h3>安装请求库</h3><pre><code>npm install @npora/request</code></pre><a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a></div>
+npm run dev</code></pre>
+            <div class="card-links">
+              <a href="https://github.com/npora/admin-template-react">开发与后端配置 <span aria-hidden="true">↗</span></a>
+              <a href="https://react.npora.live/database/">React SQL 详情与用法 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+        <div class="card request-setup">
+          <h3>安装请求库</h3>
+          <pre><code>npm install @npora/request</code></pre>
+          <a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>

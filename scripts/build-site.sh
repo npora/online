@@ -26,6 +26,12 @@ if [[ "$(git -C "$checkout" rev-parse HEAD)" != "$revision" ]]; then
   exit 1
 fi
 
+if [[ "$site" == vue || "$site" == react ]]; then
+  mkdir -p "$checkout/public/database"
+  cp "$root/shared/database/"* "$checkout/public/database/"
+  printf '/public/database/\n' >> "$checkout/.git/info/exclude"
+fi
+
 cd "$checkout"
 case "$site" in
   vue)

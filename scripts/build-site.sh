@@ -31,15 +31,22 @@ case "$site" in
   vue)
     npm ci
     CLOUDFLARE_WORKER_NAME=npora-online-vue-candidate npm run build:cloudflare
+    NPORA_VUE_SOURCE="$checkout" node --test "$root/vue/cleanup/test/worker.test.mjs"
     ;;
   react)
     npm ci
-    VITE_DEMO_ENABLED=true VITE_API_PREFIX=/api npm run build
+    VITE_DEMO_ENABLED=true VITE_AUTHENTICATOR_ENABLED=false VITE_API_PREFIX=/api npm run build
     ;;
   request)
-    npm ci --prefix website --ignore-scripts
-    npm run build --prefix website
-    npm run check --prefix website
+    site="$checkout/.online/request"
+    mkdir -p "$site/website"
+    cp "$pin" "$site/source.env"
+    tar -C "$root/request/website" --exclude=node_modules --exclude=dist --exclude=.artifacts --exclude=.wrangler -cf - . |
+      tar -C "$site/website" -xf -
+    export REQUEST_SOURCE_DIR="$checkout"
+    npm ci --prefix "$site/website" --ignore-scripts
+    npm run build --prefix "$site/website"
+    npm run check --prefix "$site/website"
     ;;
 esac
 printf '\nCandidate checkout: %s\nPinned revision: %s\n' "$checkout" "$revision"

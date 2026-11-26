@@ -19,7 +19,7 @@
 
 ## 生产接管和回滚
 
-生产继续使用现有前端 Worker `admin-demo`，连同 `admin.npora.live` 自定义域。源仓库的 `cloudflare.config.ts` 仅在生产 Worker 名称下附加该域。候选构建使用独立 Worker 名称，生产构建通过下面的命令重新生成产物。
+生产继续使用现有前端 Worker `admin-demo`，连同 `admin.npora.live` 自定义域。生产脚本显式指定该域。旧模板提交按生产 Worker 名称解析域，后续提交读取生产脚本传入的 `CLOUDFLARE_SITE_DOMAIN`。候选构建使用独立 Worker 名称，生产构建通过下面的命令重新生成产物。
 
 ```sh
 bash scripts/build-site.sh vue
@@ -29,6 +29,17 @@ bash vue/deploy.sh check "<Vue candidate checkout>"
 bash vue/deploy.sh deploy "<Vue candidate checkout>"
 ```
 
-执行前核对当前线上 Worker 的 `API_PREFIX` 和 `API` 服务绑定。源配置默认 API 服务为 `npora-admin-api-test`，脚本要求显式传入当天已核对的服务名。当前前端 Worker 入口只处理请求转发。清理脚本是独立入口，须核对原有 Cron 和数据库绑定的部署归属。以前端接管为范围时，API 服务和清理任务沿用当前部署。
+执行前核对当前线上 Worker 的 `API_PREFIX` 和 `API` 服务绑定。生产脚本要求显式传入已核对的服务名。当前前端 Worker 入口只处理请求转发。清理脚本是独立入口，须核对原有 Cron 和数据库绑定的部署归属。以前端接管为范围时，API 服务和清理任务沿用当前部署。
 
 生产接管前记录当前发布版本和 Git 构建来源，先在候选环境验证。生产冒烟失败时，恢复此前记录的 Worker 版本，并复查域名、SPA 深链接和 `/api/health`。若问题来自自动发布来源切换，从原仓库固定已知可用版本重新构建，恢复原 Git 触发配置。回滚前端不执行数据库迁移。
+
+
+## 公开演示数据清理
+
+清理 Worker 的源码位于 [`cleanup/worker.mjs`](cleanup/worker.mjs)。当前线上 Cron 和 Worker 仍由既有 Cloudflare 部署管理。从本目录重建时，先确认现有 Worker、Cron `0 16 * * *`（北京时间 00:00）、演示 D1 的 `DB` 绑定、`DEMO_CLEANUP_ENABLED` 和 `DEMO_CLEANUP_BASELINE`。基线记录每类需要保留的官方记录 ID，由平台环境提供。使用当前线上配置接管，确保同一时段只有一个清理任务执行。
+
+从仓库根目录用候选检出的 Vue 迁移运行本地回归：
+
+```sh
+NPORA_VUE_SOURCE="<Vue candidate checkout>" node --test vue/cleanup/test/worker.test.mjs
+```

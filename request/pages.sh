@@ -17,13 +17,18 @@ if [[ "$(git -C "$checkout" rev-parse HEAD)" != "$revision" ]]; then
   exit 2
 fi
 
-cd "$checkout/website"
+export REQUEST_SOURCE_DIR="$checkout"
+cd "$checkout/.online/request/website"
 for file in dist/index.html dist/build.json dist/_routes.json dist/_headers functions/api.js wrangler.jsonc; do
   if [[ ! -f "$file" ]]; then
     printf 'Missing candidate file: %s\n' "$file" >&2
     exit 2
   fi
 done
+if ! node -e 'process.exit(Number(require("./dist/build.json").sourceRevision !== process.argv[1]))' "$revision"; then
+  printf 'Built site revision does not match request/source.env. Rebuild the candidate first.\n' >&2
+  exit 2
+fi
 if [[ ! -x node_modules/.bin/wrangler ]]; then
   printf 'Build the candidate with scripts/build-site.sh request first\n' >&2
   exit 2

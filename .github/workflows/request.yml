@@ -1,0 +1,66 @@
+name: Request playground
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ['request/**', 'scripts/build-site.sh', '.github/workflows/request.yml']
+  push:
+    branches: [main]
+    paths: ['request/**', 'scripts/build-site.sh', '.github/workflows/request.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: request-website-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  website:
+    name: Cloudflare website
+    runs-on: ubuntu-24.04
+    container:
+      # Match the locked Playwright version; browsers and OS dependencies are bundled.
+      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+      options: --ipc=host --init
+    timeout-minutes: 15
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Build the pinned request playground
+        shell: bash
+        run: |
+          set -o pipefail
+          bash scripts/build-site.sh request | tee "${RUNNER_TEMP}/request-candidate.log"
+          candidate="$(sed -n 's/^Candidate checkout: //p' "${RUNNER_TEMP}/request-candidate.log")"
+          test -d "$candidate"
+          printf 'REQUEST_SOURCE_DIR=%s\n' "$candidate" >> "$GITHUB_ENV"
+          printf 'REQUEST_SITE_DIR=%s\n' "$candidate/.online/request/website" >> "$GITHUB_ENV"
+      - name: Audit website dependencies
+        run: npm audit --prefix "$REQUEST_SITE_DIR" --audit-level high
+      - name: Verify interfaces in workerd
+        run: npm --prefix "$REQUEST_SITE_DIR" test
+      - name: Verify bundled browser version
+        working-directory: ${{ env.REQUEST_SITE_DIR }}
+        run: node -e "require('node:assert/strict').equal(require('@playwright/test/package.json').version, '1.65.0', 'Update the pinned Playwright image when upgrading Playwright')"
+      - name: Match browser home ownership
+        # GitHub mounts a home directory owned by the host runner user.
+        # Firefox requires the existing directory to belong to its launch user.
+        run: chown "$(id -u):$(id -g)" "$HOME"
+      - name: Verify all scenarios in desktop and mobile browsers
+        run: npm --prefix "$REQUEST_SITE_DIR" run test:browser
+      - name: Upload browser reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: website-browser-reports
+          path: |
+            ${{ env.REQUEST_SITE_DIR }}/.artifacts/browser-report
+            ${{ env.REQUEST_SITE_DIR }}/.artifacts/browser-results
+          include-hidden-files: true
+          retention-days: 7

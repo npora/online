@@ -1,0 +1,8 @@
+{
+  "name": "npora-online-request",
+  "main": "./domain-worker.mjs",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "request.npora.live", "custom_domain": true }]
+}

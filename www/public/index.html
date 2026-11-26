@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Npora 开源开发工具。体验 Vue 后台模板和 @npora/request 的在线控制台，了解 React 后台模板。">
+  <meta name="theme-color" content="#f5f5ef">
+  <link rel="canonical" href="https://www.npora.live/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/playground-link.js" defer></script>
+  <title>Npora | 后台模板和请求工具</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="header">
+    <nav class="wrap nav" aria-label="主导航">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">N</span>Npora</a>
+      <div class="nav-links">
+        <a href="#projects">项目</a>
+        <a href="#start">快速开始</a>
+        <a href="https://github.com/npora">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="wrap hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">Npora 开源<br>开发工具</h1>
+        <p>用 Npora Admin 搭建管理后台，用 <code>@npora/request</code> 管理应用的 HTTP 请求。</p>
+        <div class="actions">
+          <a class="button primary" href="#projects">查看项目 <span aria-hidden="true">↓</span></a>
+          <a class="button secondary" href="https://admin.npora.live/">体验 Vue 后台 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <figure class="preview">
+        <figcaption><span aria-hidden="true"></span>Npora Admin · Vue 工作台</figcaption>
+        <img src="/assets/admin-dashboard.png" width="1440" height="940" alt="Vue 工作台截图，显示导航、用户与角色统计和近期账户活动">
+      </figure>
+    </section>
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <h2 id="projects-title">项目与演示</h2>
+        <div class="cards">
+          <article class="card">
+            <span class="card-logo vue" aria-hidden="true">V</span>
+            <h3>Vue 后台模板</h3>
+            <p>基于 Vue 3、TypeScript 和 Element Plus，包含登录、动态菜单、角色权限及系统管理。</p>
+            <div class="card-links">
+              <a href="https://admin.npora.live/">在线体验 <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/npora/admin-template">源码 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="card">
+            <span class="card-logo react" aria-hidden="true">R</span>
+            <h3>React 后台模板</h3>
+            <p>基于 React、TypeScript 和 Ant Design，沿用 Vue 版的接口和权限约定。在线演示使用独立的只读数据。</p>
+            <div class="card-links">
+              <a href="https://react.npora.live/">在线体验 <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/npora/admin-template-react">源码 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="card">
+            <span class="card-logo request" aria-hidden="true">/</span>
+            <h3>@npora/request</h3>
+            <p>支持重试、超时、请求取消和流式响应的 HTTP 请求库。控制台可实际运行请求场景。</p>
+            <div class="card-links">
+              <a href="https://request.npora.live/#playground">打开控制台 <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/npora/request">源码 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="wrap start" id="start" aria-labelledby="start-title">
+      <h2 id="start-title">快速开始</h2>
+      <p>生成 Vue 后台项目，或将请求库安装到已有项目。</p>
+      <div class="commands">
+        <div><h3>创建 Vue 后台</h3><pre><code>npx @npora/create-admin@latest my-admin</code></pre><a href="https://github.com/npora/create-admin">查看生成器参数 <span aria-hidden="true">↗</span></a></div>
+        <div><h3>安装请求库</h3><pre><code>npm install @npora/request</code></pre><a href="https://github.com/npora/request/blob/main/docs/api.md">查看接口文档 <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">N</span>Npora</a><a href="https://github.com/npora">GitHub <span aria-hidden="true">↗</span></a></div></footer>
+</body>
+</html>

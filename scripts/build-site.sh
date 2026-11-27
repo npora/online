@@ -30,6 +30,9 @@ if [[ "$site" == vue || "$site" == react ]]; then
   mkdir -p "$checkout/public/database"
   cp "$root/shared/database/"* "$checkout/public/database/"
   printf '/public/database/\n' >> "$checkout/.git/info/exclude"
+  mkdir -p "$checkout/public/api-guide"
+  cp "$root/shared/api-guide/"* "$checkout/public/api-guide/"
+  printf '/public/api-guide/\n' >> "$checkout/.git/info/exclude"
 fi
 
 cd "$checkout"
@@ -37,7 +40,7 @@ case "$site" in
   vue)
     npm ci
     VITE_AUTHENTICATOR_ENABLED=false VITE_API_PREFIX=/api npm run build
-    NPORA_VUE_SOURCE="$checkout" node --test "$root/vue/cleanup/test/worker.test.mjs"
+    node --test "$root/vue/cleanup/test/worker.test.mjs"
     ;;
   react)
     npm ci

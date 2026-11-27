@@ -2,6 +2,8 @@
 
 官网使用 Cloudflare Workers Static Assets，线上入口为 [www.npora.live](https://www.npora.live/)，页面源码位于本仓库 [`public/`](public/)，部署配置由本目录维护。官网提供 [Vue 后台演示](https://admin.npora.live/)、[React 后台演示](https://react.npora.live/)和[请求库控制台](https://request.npora.live/)入口。对应项目源码分别由 [Vue 模板](https://github.com/npora/admin-template)、[React 模板](https://github.com/npora/admin-template-react)、[请求库](https://github.com/npora/request)和[生成器](https://github.com/npora/create-admin)维护。
 
+Vue 和 React 演示站各自提供 Go / Node API 指南：[`admin.npora.live/api-guide/`](https://admin.npora.live/api-guide/) 与 [`react.npora.live/api-guide/`](https://react.npora.live/api-guide/)。指南源码位于 [`shared/api-guide/`](../shared/api-guide/)，由固定版本候选构建复制到两个站点；接口覆盖与可运行状态以 [`api-examples/`](../api-examples/) 中各语言 README 为准。
+
 `/api` 和 `/api/*` 兼容旧请求库示例，由官网 Worker 透传到固定的请求库域名。历史 `/#playground` 链接会跳到新的控制台。先验收请求站及其状态绑定，再切换官网域名。www 使用 Worker Route 接管流量，保留原 Pages DNS 和绑定作为回滚来源。根域现有 DNS 不由本配置管理。切换后检查旧 API 客户端。
 
 ## 快速开始文案

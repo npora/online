@@ -5,6 +5,7 @@
   "scripts": {
     "build:vue": "bash scripts/build-site.sh vue",
     "deploy:vue": "bash vue/deploy.sh latest --deploy",
+    "prepare:vue-api": "node vue/prepare-api.mjs",
     "preview:vue": "wrangler preview --config vue/wrangler.jsonc"
   },
   "devDependencies": {

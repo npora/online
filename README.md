@@ -8,6 +8,12 @@
 | [`vue/`](vue/README.md) | Vue 后台在线演示：[admin.npora.live](https://admin.npora.live/) | [Vue 后台模板](https://github.com/npora/admin-template) |
 | [`react/`](react/README.md) | React 后台在线演示：[react.npora.live](https://react.npora.live/) | [React 后台模板](https://github.com/npora/admin-template-react) |
 | [`request/`](request/README.md) | 请求库在线介绍与控制台：[request.npora.live](https://request.npora.live/) | [请求库与 API 文档](https://github.com/npora/request) |
+| [`api/cloudflare/`](api/cloudflare/README.md) | Vue/React 在线演示共用的 Cloudflare Worker API 与 D1 迁移 | Vue 模板接口契约；仅供 D1，不是 MySQL SQL |
+| `api-examples/node/` | Node.js + MySQL 后端示例源码 | Vue 模板 API 契约与 MySQL SQL；实现状态见目录 README |
+| `api-examples/go/` | Go + MySQL 后端示例源码 | Vue 模板 API 契约与 MySQL SQL；实现状态见目录 README |
+| [`shared/api-guide/`](shared/api-guide/) | 共用 API 指南静态页面，候选构建注入两套演示站的 `/api-guide/` | 同步到 `www/` 的 Vue、React 入口链接 |
+
+Go 和 Node 示例正在开发与契约核对中；在各自 README 列出的接口覆盖和本地运行步骤验收完成前，不把它们宣传为完整可用的后台 API。
 
 ## 构建迁移候选版本
 
@@ -19,7 +25,7 @@ bash scripts/build-site.sh react
 bash scripts/build-site.sh request
 ```
 
-现有站点仍由原部署负责。迁移先验证预览和回滚路径，再按授权切换域名、API 绑定与定时清理所有权。
+Vue、React 候选构建会将 `shared/api-guide/` 复制到构建产物 `public/api-guide/`，分别通过 `https://admin.npora.live/api-guide/` 和 `https://react.npora.live/api-guide/` 提供指南。现有站点仍由原部署负责。迁移先验证预览和回滚路径，再按授权切换域名、API 绑定与定时清理所有权。
 
 ## Vue Worker 的 Cloudflare Builds 配置
 
@@ -34,4 +40,4 @@ bash scripts/build-site.sh request
 | Deploy command | `npm run deploy:vue` |
 | Preview command | `npm run preview:vue` |
 
-根目录的 `package.json` 只提供 Cloudflare Builds 入口。构建脚本会按 `vue/source.env` 获取固定的 Vue 模板提交、构建静态资源并运行清理回归；部署脚本随后将该候选版本发到 `admin-demo`。预览命令为非生产分支创建 Worker Preview，绑定到演示 API `npora-admin-api-test`。保留原有 `admin-demo build token`，并确认它具备 Worker 部署权限、演示 API 绑定在 Cloudflare 中可用。成功迁移后断开旧 `admin-template` 连接，避免旧构建覆盖线上版本。
+根目录的 `package.json` 只提供 Cloudflare Builds 入口。构建脚本会按 `vue/source.env` 获取固定的 Vue 模板提交、构建静态资源并运行清理回归；部署脚本随后将该候选版本发到 `admin-demo`。预览 URL 已关闭，生产站点保持公网可访问，不配置 IP 白名单或 Cloudflare Access。构建脚本按 `vue/source.env` 生成候选版本并发布到绑定 `admin.npora.live` 的 `admin-demo` Worker；同源 API 转发到独立的 `npora-online-vue-api`。旧 `npora-admin-api-test` 与独立清理 Worker 在新站验证成功后退役，旧 D1 暂作回滚保留。

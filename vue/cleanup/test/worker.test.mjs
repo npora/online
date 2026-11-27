@@ -1,14 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { resolve } from 'node:path'
-import { pathToFileURL } from 'node:url'
 import worker from '../worker.mjs'
-
-const source = process.env.NPORA_VUE_SOURCE
-if (!source) throw new Error('Set NPORA_VUE_SOURCE to the Vue candidate checkout')
-const { database } = await import(
-  pathToFileURL(resolve(source, 'workers/api/tests/helpers/database.mjs')).href
-)
+import { database } from './database.mjs'
 
 const schedule = { cron: '0 16 * * *' }
 const tables = {

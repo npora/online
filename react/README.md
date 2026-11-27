@@ -1,6 +1,6 @@
 # React 后台演示
 
-React 后台在线演示入口为 [react.npora.live](https://react.npora.live/)，也可从[官网演示导航](https://www.npora.live/)进入。`source.env` 固定演示使用的 [React 模板源码](https://github.com/npora/admin-template-react)完整提交。
+React 后台在线演示入口为 [react.npora.live](https://react.npora.live/)，也可从[官网演示导航](https://www.npora.live/)进入。Go / Node 后端接入指南在 [react.npora.live/api-guide/](https://react.npora.live/api-guide/)。`source.env` 固定演示使用的 [React 模板源码](https://github.com/npora/admin-template-react)完整提交。
 模板仓库维护应用、业务接口契约、MySQL 脚本和依赖锁；本目录维护线上演示版本引用、独立只读演示配置、预览验收和 Cloudflare 部署。
 
 ## 构建和预览
@@ -12,7 +12,7 @@ bash scripts/build-site.sh react
 node --test react/worker.test.mjs
 ```
 
-生产静态文件位于构建脚本报告的候选源码目录下的 `dist/`。只预览静态界面时，
+生产静态文件位于候选源码目录的 `dist/`，其中共用 API 指南输出到 `dist/api-guide/`。只预览静态界面时，
 在候选源码目录运行 `npm run preview`。登录和管理操作须通过绑定隔离后端的预览环境验收。
 
 ## Cloudflare 接入
@@ -37,13 +37,15 @@ Worker 去掉同源请求的 `/api` 前缀，保留请求方法、查询和请�
 
 ## 独立演示 API
 
-使用同一份 Vue 参考后端实现和编号迁移。在仓库根目录构建 Vue 候选后，
-传入构建脚本报告的 Vue 候选目录。脚本核对锁定的提交，然后将 API 源码和
-迁移复制到独立的 `.build/react-api.*` 目录，输出可供 Wrangler 使用的配置。
-候选目录中的字典种子用等价的 `VALUES` 处理 D1 对 `UNION ALL` 项数的限制。
+API 实现和 D1 迁移由线上仓库统一维护在 [`api/cloudflare/`](../api/cloudflare/)，
+不再从 Vue 模板仓库复制。该目录的实现覆盖两套前端共用的接口契约；React
+API 候选在此基础上使用独立服务名、React 专用 D1 和只读演示限制。
+候选目录中的字典种子会转换为等价 `VALUES`，以适配 D1 对 `UNION ALL` 项数的限制。
+
+准备 React API 候选不需要先构建 Vue，也不需要 Vue 模板 checkout：
 
 ```sh
-node react/prepare-api.mjs "<Vue 候选源码目录>"
+node react/prepare-api.mjs
 npx --yes wrangler@4.154.0 deploy --config "<API 候选目录>/wrangler.jsonc" --dry-run --no-autoconfig
 npx --yes wrangler@4.154.0 d1 migrations apply npora-online-react-data \
   --config "<API 候选目录>/wrangler.jsonc" --local
@@ -60,8 +62,8 @@ npx --yes wrangler@4.154.0 d1 migrations apply npora-online-react-data \
   "<API 候选目录>/wrangler.jsonc" --local --file "<API 候选目录>/demo-seed.sql"`
   初始化本地演示用户。指定了 Wrangler 本地持久化目录时，迁移和初始化须使用同一目录。
 - 公开演示用户 `admin` 实际使用只读角色，非超级管理员。API 另有方法限制，
-  除登录和退出所需的会话写入外，拒绝业务及账户写入。后端的鉴权、会话和权限判断
-  仍由引用的 Vue 参考后端完成。
+  除登录和退出所需的会话写入外，拒绝业务及账户写入。后端仍独立完成会话、鉴权
+  和逐接口权限判断。
 - 线上数据库创建、远程迁移、导入种子、绑定 Secret、后端及前端部署分别按授权执行。
   先确认独立数据库和后端候选，再部署前端并验证同源登录、菜单、读取及写入拒绝。
 

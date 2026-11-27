@@ -1,0 +1,17 @@
+{
+  "name": "npora-admin-api-node-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Node.js and MySQL backend example for Npora Admin Vue and React templates",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --watch src/server.mjs",
+    "start": "node --env-file-if-exists=.env src/server.mjs"
+  },
+  "dependencies": {
+    "mysql2": "^3.15.3"
+  }
+}

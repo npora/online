@@ -1,17 +1,16 @@
-import { execFileSync } from 'node:child_process'
-import { cp, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises'
-import { join, resolve } from 'node:path'
+import { access, cp, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
-const source = process.argv[2]
-if (!source) throw new Error('Usage: node react/prepare-api.mjs <Vue candidate checkout>')
-const checkout = resolve(source)
-const pin = await readFile(join(root, 'vue/source.env'), 'utf8')
-const revision = /^SOURCE_REV=([0-9a-f]{40})$/m.exec(pin)?.[1]
-const git = (...args) => execFileSync('git', ['-C', checkout, ...args], { encoding: 'utf8' }).trim()
-if (!revision || git('rev-parse', '--show-toplevel') !== checkout || git('rev-parse', 'HEAD') !== revision) {
-  throw new Error('Expected a Vue checkout at the revision pinned in vue/source.env')
+const api = join(root, 'api/cloudflare')
+const apiEntry = join(api, 'src/index.mjs')
+const apiMigrations = join(api, 'migrations')
+try {
+  await access(apiEntry)
+  await access(apiMigrations)
+} catch {
+  throw new Error('Cloudflare demo API source is missing from api/cloudflare')
 }
 
 const database = 'npora-online-react-data'
@@ -26,7 +25,6 @@ const password = process.env.REACT_DEMO_PASSWORD
 if ((pepper === undefined) !== (password === undefined)) {
   throw new Error('Provide both AUTH_PEPPER and REACT_DEMO_PASSWORD to generate a seed')
 }
-const api = join(checkout, 'workers/api')
 let passwordHash
 if (password !== undefined) {
   const { hashPassword } = await import(pathToFileURL(join(api, 'src/security/crypto.mjs')))
@@ -37,7 +35,7 @@ const buildRoot = join(root, '.build')
 await mkdir(buildRoot, { recursive: true })
 const output = await mkdtemp(join(buildRoot, 'react-api.'))
 await cp(join(api, 'src'), join(output, 'src'), { recursive: true })
-await cp(join(api, 'migrations'), join(output, 'migrations'), { recursive: true })
+await cp(apiMigrations, join(output, 'migrations'), { recursive: true })
 // D1 limits compound SELECTs. The pinned dictionary seed has eight UNION terms.
 const dictionaryPath = join(output, 'migrations/0005_dictionaries.sql')
 const dictionarySql = await readFile(dictionaryPath, 'utf8')

@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "build:vue": "bash scripts/build-site.sh vue",
-    "deploy:vue": "bash vue/deploy.sh latest --deploy"
+    "deploy:vue": "bash vue/deploy.sh latest --deploy",
+    "preview:vue": "wrangler preview --config vue/wrangler.jsonc"
+  },
+  "devDependencies": {
+    "wrangler": "4.154.0"
   }
 }

@@ -32,5 +32,6 @@ bash scripts/build-site.sh request
 | Root directory | `/` |
 | Build command | `npm run build:vue` |
 | Deploy command | `npm run deploy:vue` |
+| Preview command | `npm run preview:vue` |
 
-根目录的 `package.json` 只提供 Cloudflare Builds 入口。构建脚本会按 `vue/source.env` 获取固定的 Vue 模板提交、构建静态资源并运行清理回归；部署脚本随后将该候选版本发到 `admin-demo`。保留原有 `admin-demo build token`，并确认其具备 Worker 部署权限以及 `API` 服务绑定目标 `npora-admin-api-test` 在 Cloudflare 配置中可用。成功迁移后断开旧 `admin-template` 连接，避免旧构建覆盖线上版本。
+根目录的 `package.json` 只提供 Cloudflare Builds 入口。构建脚本会按 `vue/source.env` 获取固定的 Vue 模板提交、构建静态资源并运行清理回归；部署脚本随后将该候选版本发到 `admin-demo`。预览命令为非生产分支创建 Worker Preview，绑定到演示 API `npora-admin-api-test`。保留原有 `admin-demo build token`，并确认它具备 Worker 部署权限、演示 API 绑定在 Cloudflare 中可用。成功迁移后断开旧 `admin-template` 连接，避免旧构建覆盖线上版本。

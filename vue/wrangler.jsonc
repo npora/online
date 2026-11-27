@@ -4,11 +4,12 @@
   "main": "worker.mjs",
   "compatibility_date": "2026-11-27",
   "workers_dev": false,
-  "preview_urls": false,
+  "preview_urls": true,
   "routes": [
     { "pattern": "admin.npora.live", "custom_domain": true }
   ],
   "assets": {
+    "directory": "../.build/vue-current/dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api", "/api/*"]
@@ -16,6 +17,11 @@
   "services": [
     { "binding": "API", "service": "npora-admin-api-test" }
   ],
+  "previews": {
+    "services": [
+      { "binding": "API", "service": "npora-admin-api-test" }
+    ]
+  },
   "observability": {
     "enabled": true,
     "traces": { "enabled": true }

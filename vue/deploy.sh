@@ -10,7 +10,7 @@ if [[ ( "$#" -ne 1 && "$#" -ne 2 ) || ( "$#" -eq 2 && "$2" != "--deploy" ) ]]; t
 fi
 
 if [[ "$checkout" == latest ]]; then
-  checkout="$(cat "$root/.build/vue-current" 2>/dev/null || true)"
+  checkout="$(cat "$root/.build/vue-current-path" 2>/dev/null || true)"
   if [[ -z "$checkout" ]]; then
     printf 'No successful Vue candidate is recorded. Run npm run build:vue first.\n' >&2
     exit 2

@@ -56,6 +56,8 @@ case "$site" in
     ;;
 esac
 if [[ "$site" == vue ]]; then
-  printf '%s\n' "$checkout" > "$root/.build/vue-current"
+  printf '%s\n' "$checkout" > "$root/.build/vue-current-path"
+  rm -f "$root/.build/vue-current"
+  ln -s "$checkout" "$root/.build/vue-current"
 fi
 printf '\nCandidate checkout: %s\nPinned revision: %s\n' "$checkout" "$revision"

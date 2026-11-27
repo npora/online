@@ -1,0 +1,9 @@
+{
+  "name": "npora-online-deploy",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:vue": "bash scripts/build-site.sh vue",
+    "deploy:vue": "bash vue/deploy.sh latest --deploy"
+  }
+}

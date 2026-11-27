@@ -55,4 +55,7 @@ case "$site" in
     npm run check --prefix "$site/website"
     ;;
 esac
+if [[ "$site" == vue ]]; then
+  printf '%s\n' "$checkout" > "$root/.build/vue-current"
+fi
 printf '\nCandidate checkout: %s\nPinned revision: %s\n' "$checkout" "$revision"

@@ -20,3 +20,17 @@ bash scripts/build-site.sh request
 ```
 
 现有站点仍由原部署负责。迁移先验证预览和回滚路径，再按授权切换域名、API 绑定与定时清理所有权。
+
+## Vue Worker 的 Cloudflare Builds 配置
+
+`admin-demo` 应从本仓库部署，不再直接连接 `npora/admin-template`。在 Cloudflare 的 Worker Settings → Builds 中配置：
+
+| 字段 | 值 |
+| --- | --- |
+| Git repository | `npora/online` |
+| Production branch | `main` |
+| Root directory | `/` |
+| Build command | `npm run build:vue` |
+| Deploy command | `npm run deploy:vue` |
+
+根目录的 `package.json` 只提供 Cloudflare Builds 入口。构建脚本会按 `vue/source.env` 获取固定的 Vue 模板提交、构建静态资源并运行清理回归；部署脚本随后将该候选版本发到 `admin-demo`。保留原有 `admin-demo build token`，并确认其具备 Worker 部署权限以及 `API` 服务绑定目标 `npora-admin-api-test` 在 Cloudflare 配置中可用。成功迁移后断开旧 `admin-template` 连接，避免旧构建覆盖线上版本。

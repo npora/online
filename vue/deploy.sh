@@ -2,10 +2,10 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-action="${1:-}"
-checkout="${2:-}"
-if [[ "$#" -ne 2 || ( "$action" != check && "$action" != deploy ) ]]; then
-  printf 'Usage: CLOUDFLARE_API_WORKER=<existing API Worker> bash %s {check|deploy} <Vue candidate checkout>\n' "$0" >&2
+site="$root/vue"
+checkout="${1:-}"
+if [[ ( "$#" -ne 1 && "$#" -ne 2 ) || ( "$#" -eq 2 && "$2" != "--deploy" ) ]]; then
+  printf 'Usage: bash %s <Vue candidate checkout> [--deploy]\n' "$0" >&2
   exit 2
 fi
 
@@ -16,18 +16,20 @@ case "$checkout" in
 esac
 
 revision="$(sed -n 's/^SOURCE_REV=//p' "$root/vue/source.env")"
-if [[ "$(git -C "$checkout" rev-parse HEAD)" != "$revision" || -n "$(git -C "$checkout" status --porcelain)" ]]; then
-  printf 'The Vue checkout must match the fixed source revision and have no changes.\n' >&2
+if [[ "$(git -C "$checkout" rev-parse --show-toplevel)" != "$checkout" ||
+      "$(git -C "$checkout" rev-parse HEAD)" != "$revision" ||
+      ! -f "$checkout/dist/index.html" ]]; then
+  printf 'Expected a built Vue candidate at the pinned revision.\n' >&2
   exit 2
 fi
 
-: "${CLOUDFLARE_API_WORKER:?Set CLOUDFLARE_API_WORKER to the verified production API Worker name}"
-export CLOUDFLARE_WORKER_NAME=admin-demo
-export CLOUDFLARE_SITE_DOMAIN=admin.npora.live
-export CLOUDFLARE_API_WORKER
-cd "$checkout"
-npm run build:cloudflare
-npm run check:cloudflare
-if [[ "$action" == deploy ]]; then
-  npm run deploy:cloudflare
+if [[ "${2:-}" == "--deploy" ]]; then
+  set --
+else
+  set -- --dry-run
 fi
+
+cd "$site"
+export WRANGLER_SEND_METRICS=false
+exec npm exec --yes --package=wrangler@4.154.0 -- wrangler deploy \
+  --config "$site/wrangler.jsonc" --assets "$checkout/dist" --no-autoconfig "$@"

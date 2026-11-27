@@ -36,7 +36,7 @@ cd "$checkout"
 case "$site" in
   vue)
     npm ci
-    CLOUDFLARE_WORKER_NAME=npora-online-vue-candidate npm run build:cloudflare
+    VITE_AUTHENTICATOR_ENABLED=false VITE_API_PREFIX=/api npm run build
     NPORA_VUE_SOURCE="$checkout" node --test "$root/vue/cleanup/test/worker.test.mjs"
     ;;
   react)

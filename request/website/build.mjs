@@ -21,7 +21,7 @@ if (name !== '@npora/request' || typeof version !== 'string') {
 await rm(output, { recursive: true, force: true })
 await mkdir(output, { recursive: true })
 // Explicit allowlist: never upload functions, tooling, credentials or source maps.
-for (const name of ['index.html', 'style.css', 'favicon.svg', '_headers', '_routes.json', '404.html']) {
+for (const name of ['index.html', 'style.css', 'favicon.svg', 'robots.txt', 'sitemap.xml', '_headers', '_routes.json', '404.html']) {
   await copyFile(new URL(name, root), new URL(name, output))
 }
 await build({ entryPoints: {
